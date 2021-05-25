@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Book Shelf</title>
+    <style>
+        .table {
+            margin: 0 auto;
+        }
+
+        .table_row {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form_item {
+            width: 250px;
+            margin-bottom: 10px;
+        }
+
+        input {
+            height: 35px;
+        }
+
+        #books {
+            margin: 0 auto;
+            padding-top: 50px;
+            width: 500px;
+        }
+
+        .books_item {
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<form method="POST" th:action="@{/books/save}" th:object="${book}">
+    <table class="table">
+        <tr class="table_row">
+            <td>
+                <input class="form_item" type="text" placeholder="Author" th:field="*{author}">
+            </td>
+            <td>
+                <input class="form_item" type="text" placeholder="Title" th:field="*{title}">
+            </td>
+            <td>
+                <input class="form_item" type="text" placeholder="Size (pages)" th:field="*{size}">
+            </td>
+            <td>
+                <input class="form_item" type="submit" value="Save book">
+            </td>
+        </tr>
+    </table>
+</form>
+<hr>
+<form method="POST" th:action="@{/books/remove}">
+    <table class="table">
+        <tr class="table_row">
+            <td>
+                <input class="form_item" type="text" placeholder="Id of book" th:name="id">
+            </td>
+            <td>
+                <input class="form_item" type="submit" value="Remove book">
+            </td>
+        </tr>
+    </table>
+</form>
+<hr>
+<table id="books">
+    <tr>
+        <th class="books_item">Id</th>
+        <th class="books_item">Author</th>
+        <th class="books_item">Title</th>
+        <th class="books_item">Size</th>
+    </tr>
+    <tr th:each="book : ${bookList}">
+        <td class="books_item" th:text="${book.id}"></td>
+        <td class="books_item" th:text="${book.author}"></td>
+        <td class="books_item" th:text="${book.title}"></td>
+        <td class="books_item" th:text="${book.size}"></td>
+    </tr>
+</table>
+</body>
+</html>
