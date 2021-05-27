@@ -3,9 +3,9 @@ package org.example.repo;
 import java.util.List;
 
 public interface MyRepository<T> {
-    List<T> retrieveAll();
+    List<T> getAll();
 
-    void store(T t);
+    void saveItem(T t);
 
     boolean removeItemById(Long id);
 }

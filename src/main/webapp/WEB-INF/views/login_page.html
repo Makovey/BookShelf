@@ -18,14 +18,35 @@
         input {
             height: 35px;
         }
+
+        .sign_up {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+
+        .btn {
+            height: 35px;
+            width: 250px;
+        }
+
+        .paragraph {
+            text-align: center;
+            font-size: 30px;
+        }
     </style>
 </head>
 <body>
-<form id="login_form" method="POST" th:action="@{/login/auth}" th:object="${loginForm}">
+<form id="login_form" method="POST" th:action="@{/login/auth}" th:object="${user}">
     <img class="login_item" th:src="@{/images/book_icon.png}" alt="book_icon">
     <input type="text" class="login_item" placeholder="Enter your name" th:field="*{username}">
     <input type="password" class="login_item" placeholder="Enter your password" th:field="*{password}">
     <input type="submit" class="login_item" value="Login">
 </form>
+<p class="paragraph">OR</p>
+<a class="sign_up" th:href="@{/registration}">
+    <button class="btn">Sign Up</button>
+</a>
 </body>
 </html>

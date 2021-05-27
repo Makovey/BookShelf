@@ -14,12 +14,12 @@ public class BookRepository implements MyRepository<Book> {
     private final List<Book> repo = new ArrayList<>();
 
     @Override
-    public List<Book> retrieveAll() {
+    public List<Book> getAll() {
         return repo;
     }
 
     @Override
-    public void store(Book book) {
+    public void saveItem(Book book) {
         book.setId((long) book.hashCode());
         log.info("Saving book " + book);
         repo.add(book);
@@ -27,7 +27,7 @@ public class BookRepository implements MyRepository<Book> {
 
     @Override
     public boolean removeItemById(Long id) {
-        for (Book book : retrieveAll()) {
+        for (Book book : getAll()) {
             if (book.getId().equals(id)) {
                 log.info("Deleting book " + book);
                 return repo.remove(book);

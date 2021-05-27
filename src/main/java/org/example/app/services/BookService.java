@@ -14,11 +14,11 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public List<Book> getAllBooks() {
-        return bookRepository.retrieveAll();
+        return bookRepository.getAll();
     }
 
     public void saveBook(Book book){
-        bookRepository.store(book);
+        bookRepository.saveItem(book);
     }
 
     public boolean removeBookById(Long id) {

@@ -3,7 +3,7 @@ package org.example.web.controllers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.app.services.LoginService;
-import org.example.web.dto.LoginForm;
+import org.example.web.dto.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +21,13 @@ public class LoginController {
     @GetMapping
     public String login(Model model) {
         log.info("GET /login -> login_page.html");
-        model.addAttribute("loginForm", new LoginForm());
+        model.addAttribute("user", new User());
         return "login_page";
     }
 
     @PostMapping("/auth")
-    public String authenticate(LoginForm loginForm) {
-        if (loginService.authenticate(loginForm)) {
+    public String authenticate(User user) {
+        if (loginService.authenticate(user)) {
             log.info("login successful");
             return "redirect:/books/shelf";
         } else {
