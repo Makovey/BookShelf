@@ -16,6 +16,7 @@
         .form_item {
             width: 250px;
             margin-bottom: 10px;
+            box-sizing: border-box;
         }
 
         input {
@@ -33,9 +34,15 @@
             text-align: center;
         }
 
+        .paragraph {
+            text-align: center;
+            font-size: 30px;
+        }
+
     </style>
 </head>
 <body>
+<p class="paragraph">Add new book</p>
 <form method="POST" th:action="@{/books/save}" th:object="${book}">
     <table class="table">
         <tr class="table_row">
@@ -55,6 +62,7 @@
     </table>
 </form>
 <hr>
+<p class="paragraph">Remove book by id</p>
 <form method="POST" th:action="@{/books/remove}">
     <table class="table">
         <tr class="table_row">
@@ -68,12 +76,13 @@
     </table>
 </form>
 <hr>
+<p class="paragraph">Books on the shelf</p>
 <table id="books">
     <tr>
-        <th class="books_item">Id</th>
-        <th class="books_item">Author</th>
-        <th class="books_item">Title</th>
-        <th class="books_item">Size</th>
+        <th class="books_item" scope="colgroup">Id</th>
+        <th class="books_item" scope="colgroup">Author</th>
+        <th class="books_item" scope="colgroup">Title</th>
+        <th class="books_item" scope="colgroup">Size</th>
     </tr>
     <tr th:each="book : ${bookList}">
         <td class="books_item" th:text="${book.id}"></td>
