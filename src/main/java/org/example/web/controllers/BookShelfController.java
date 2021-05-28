@@ -20,14 +20,14 @@ public class BookShelfController {
     private final BookService bookService;
 
     @GetMapping("/shelf")
-    public String books(Model model) {
+    public String getBooks(Model model) {
         log.info("Getting books");
         model.addAttribute("book", new Book());
         model.addAttribute("bookList", bookService.getAllBooks());
         return "book_shelf";
     }
 
-    @PostMapping("save")
+    @PostMapping("/save")
     public String saveBook(Book book) {
         if (!book.getAuthor().isEmpty() || !book.getTitle().isEmpty() || book.getSize() != null) {
             bookService.saveBook(book);
@@ -36,7 +36,14 @@ public class BookShelfController {
     }
 
     @PostMapping("/remove")
-    public String removeBook(@RequestParam(value = "id", defaultValue = "0") Long id) {
+    public String removeBook(Book book) {
+        log.info("Trying to delete books with parameter: " + book);
+        bookService.removeAllByParameter(book);
+        return "redirect:/books/shelf";
+    }
+
+    @PostMapping("/remove/by-id")
+    public String removeBookById(@RequestParam(value = "id", required = false) Long id) {
         if (bookService.removeBookById(id)) {
             log.info("Successful, deleted book with id: " + id);
         } else {
@@ -44,4 +51,23 @@ public class BookShelfController {
         }
         return "redirect:/books/shelf";
     }
+
+    @PostMapping("/sort")
+    public String sortBooks(
+            @RequestParam(value = "author", required = false) String author,
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "size", required = false) String size) {
+        if (author != null) {
+            log.info("Sort by author : " + author);
+            bookService.sort(author);
+        } else if (title != null) {
+            log.info("Sort by title : " + title);
+            bookService.sort(title);
+        } else {
+            log.info("Sort by title : " + size);
+            bookService.sort(size);
+        }
+        return "redirect:/books/shelf";
+    }
+
 }

@@ -36,7 +36,23 @@
 
         .paragraph {
             text-align: center;
-            font-size: 30px;
+            font-size: 26px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .sort-btn {
+            width: 200px;
+            height: 35px;
+        }
+
+        .remove-tables {
+            display: flex;
+            justify-content: space-around;
+            flex-direction: row-reverse;
         }
 
     </style>
@@ -62,19 +78,41 @@
     </table>
 </form>
 <hr>
-<p class="paragraph">Remove book by id</p>
-<form method="POST" th:action="@{/books/remove}">
-    <table class="table">
-        <tr class="table_row">
-            <td>
-                <input class="form_item" type="text" placeholder="Id of book" th:name="id">
-            </td>
-            <td>
-                <input class="form_item" type="submit" value="Remove book">
-            </td>
-        </tr>
-    </table>
-</form>
+<p class="paragraph">Remove Books</p>
+<div class="remove-tables">
+    <form method="POST" th:action="@{/books/remove/by-id}">
+        <table class="table">
+            <caption>By Id</caption>
+            <tr class="table_row">
+                <td>
+                    <input class="form_item" type="text" placeholder="Id of book" th:name="id">
+                </td>
+                <td>
+                    <input class="form_item" type="submit" value="Remove book">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <form method="POST" th:action="@{/books/remove}" th:object="${book}">
+        <table class="table">
+            <caption>By any parameter</caption>
+            <tr class="table_row">
+                <td>
+                    <input class="form_item" type="text" placeholder="Author" th:field="*{author}">
+                </td>
+                <td>
+                    <input class="form_item" type="text" placeholder="Title" th:field="*{title}">
+                </td>
+                <td>
+                    <input class="form_item" type="text" placeholder="Size" th:field="*{size}">
+                </td>
+                <td>
+                    <input class="form_item" type="submit" value="Remove book">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 <hr>
 <p class="paragraph">Books on the shelf</p>
 <table id="books">
@@ -82,7 +120,7 @@
         <th class="books_item" scope="colgroup">Id</th>
         <th class="books_item" scope="colgroup">Author</th>
         <th class="books_item" scope="colgroup">Title</th>
-        <th class="books_item" scope="colgroup">Size</th>
+        <th class="books_item" scope="colgroup">Pages</th>
     </tr>
     <tr th:each="book : ${bookList}">
         <td class="books_item" th:text="${book.id}"></td>
@@ -91,5 +129,12 @@
         <td class="books_item" th:text="${book.size}"></td>
     </tr>
 </table>
+<hr>
+<p class="paragraph">Sort this books</p>
+<form class="buttons" method="POST" th:action="@{/books/sort}">
+    <button class="sort-btn" th:name="author" th:value="author">By Author</button>
+    <button class="sort-btn" th:name="title" th:value="title">By Title</button>
+    <button class="sort-btn" th:name="size" th:value="size">By Pages</button>
+</form>
 </body>
 </html>
