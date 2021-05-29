@@ -70,4 +70,24 @@ public class BookShelfController {
         return "redirect:/books/shelf";
     }
 
+    @PostMapping("/filter")
+    public String filterBooks(
+            @RequestParam(value = "author", required = false) String author,
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "size", required = false) String size) {
+        if (!author.isEmpty()) {
+            log.info("Filter by author : " + author);
+            bookService.filterByAuthor(author);
+        } else if (!title.isEmpty()) {
+            log.info("Filter by title : " + title);
+            bookService.filterByTitle(title);
+        } else if (size != null) {
+            log.info("Filter by page : " + size);
+            bookService.filterBySize(size);
+        } else {
+            log.info("Return original list");
+            bookService.returnOriginalList();
+        }
+        return "redirect:/books/shelf";
+    }
 }

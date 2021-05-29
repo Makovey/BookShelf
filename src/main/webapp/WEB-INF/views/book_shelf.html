@@ -55,6 +55,13 @@
             flex-direction: row-reverse;
         }
 
+        #filter_form {
+            display: flex;
+            flex-direction: column;
+            width: 250px;
+            margin: 0 auto;
+        }
+
     </style>
 </head>
 <body>
@@ -135,6 +142,14 @@
     <button class="sort-btn" th:name="author" th:value="author">By Author</button>
     <button class="sort-btn" th:name="title" th:value="title">By Title</button>
     <button class="sort-btn" th:name="size" th:value="size">By Pages</button>
+</form>
+<hr>
+<p class="paragraph">Filter this books</p>
+<form id="filter_form" method="POST" th:action="@{/books/filter}">
+    <input class="form_item" type="text" placeholder="Filter by author" th:name="author">
+    <input class="form_item" type="text" placeholder="Filter by title" th:name="title">
+    <input class="form_item" type="text" placeholder="Filter by page" th:name="size">
+    <input class="form_item" type="submit" value="Confirm">
 </form>
 </body>
 </html>
