@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>Spring_first_module</artifactId>
+    <artifactId>BookShelf</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>Spring_first_module Maven Webapp</name>
+    <name>BookShelf Maven Webapp</name>
     <url>http://www.example.com</url>
 
     <properties>
@@ -46,10 +46,15 @@
             <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>Spring_first_module</finalName>
+        <finalName>BookShelf</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>

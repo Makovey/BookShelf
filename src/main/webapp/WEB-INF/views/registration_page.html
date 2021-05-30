@@ -3,23 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
+    <link rel="stylesheet" th:href="@{/styles/registration_page.css}">
 </head>
-<style>
-    #registration_form {
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        width: 250px;
-    }
-
-    .registration_item {
-        margin-bottom: 10px;
-    }
-
-    input {
-        height: 35px;
-    }
-</style>
 <body>
 <form id="registration_form" method="POST" th:action="@{/registration/save}" th:object="${user}">
     <input type="text" class="registration_item" placeholder="Enter your name" th:field="*{username}">

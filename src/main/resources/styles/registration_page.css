@@ -1,0 +1,14 @@
+#registration_form {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+
+.registration_item {
+    margin-bottom: 10px;
+}
+
+input {
+    height: 35px;
+}

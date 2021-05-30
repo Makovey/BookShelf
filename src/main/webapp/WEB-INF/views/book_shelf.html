@@ -3,66 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Book Shelf</title>
-    <style>
-        .table {
-            margin: 0 auto;
-        }
-
-        .table_row {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form_item {
-            width: 250px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-
-        input {
-            height: 35px;
-        }
-
-        #books {
-            margin: 0 auto;
-            padding-top: 50px;
-            width: 500px;
-        }
-
-        .books_item {
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-        }
-
-        .paragraph {
-            text-align: center;
-            font-size: 26px;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: space-evenly;
-        }
-
-        .sort-btn {
-            width: 200px;
-            height: 35px;
-        }
-
-        .remove-tables {
-            display: flex;
-            justify-content: space-around;
-            flex-direction: row-reverse;
-        }
-
-        #filter_form {
-            display: flex;
-            flex-direction: column;
-            width: 250px;
-            margin: 0 auto;
-        }
-
-    </style>
+    <link rel="stylesheet" th:href="@{/styles/book_shelf.css}">
 </head>
 <body>
 <p class="paragraph">Add new book</p>

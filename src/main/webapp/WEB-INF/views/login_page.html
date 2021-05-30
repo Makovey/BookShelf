@@ -3,39 +3,7 @@
 <head>
     <title>Book Shelf Login</title>
     <meta charset="UTF-8">
-    <style>
-        #login_form {
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            width: 250px;
-        }
-
-        .login_item {
-            margin-bottom: 10px;
-        }
-
-        input {
-            height: 35px;
-        }
-
-        .sign_up {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            text-decoration: none;
-        }
-
-        .btn {
-            height: 35px;
-            width: 250px;
-        }
-
-        .paragraph {
-            text-align: center;
-            font-size: 30px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/styles/login_page.css}">
 </head>
 <body>
 <form id="login_form" method="POST" th:action="@{/login/auth}" th:object="${user}">
