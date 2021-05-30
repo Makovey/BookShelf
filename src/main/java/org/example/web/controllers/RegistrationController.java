@@ -28,6 +28,13 @@ public class RegistrationController {
     @PostMapping("/save")
     public String saveUser(User user) {
         log.info("POST registration page");
+        if (userService.isUserPresent(user)) {
+            log.info("User already registered :" + user);
+            return "registration_page";
+        } else if (!userService.isFieldsAreFill(user)) {
+            log.info("Fill the fields, user is empty  : " + user);
+            return "registration_page";
+        }
         userService.saveUser(user);
         return "redirect:/login";
     }

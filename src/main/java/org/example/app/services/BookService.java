@@ -42,18 +42,19 @@ public class BookService {
         if (sortItem.equals("author")) {
             sortedBooks = getAllBooks()
                     .stream()
-                    .sorted(Comparator.comparing(Book::getAuthor))
+                    .sorted(Comparator.comparing(Book::getAuthor, Comparator.nullsFirst(Comparator.naturalOrder())))
                     .collect(Collectors.toList());
         } else if (sortItem.equals("title")) {
             sortedBooks = getAllBooks()
                     .stream()
-                    .sorted(Comparator.comparing(Book::getTitle))
+                    .sorted(Comparator.comparing(Book::getTitle, Comparator.nullsFirst(Comparator.naturalOrder())))
                     .collect(Collectors.toList());
         } else {
             sortedBooks = getAllBooks()
                     .stream()
-                    .sorted(Comparator.comparingLong(Book::getSize))
+                    .sorted(Comparator.comparing(Book::getSize, Comparator.nullsFirst(Comparator.naturalOrder())))
                     .collect(Collectors.toList());
+
         }
         replaceMainList(sortedBooks);
     }

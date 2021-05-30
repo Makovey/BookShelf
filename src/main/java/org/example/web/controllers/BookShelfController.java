@@ -64,7 +64,7 @@ public class BookShelfController {
             log.info("Sort by title : " + title);
             bookService.sort(title);
         } else {
-            log.info("Sort by title : " + size);
+            log.info("Sort by page : " + size);
             bookService.sort(size);
         }
         return "redirect:/books/shelf";
