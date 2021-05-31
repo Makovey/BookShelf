@@ -18,6 +18,7 @@
             </td>
             <td>
                 <input class="form_item" type="text" placeholder="Size (pages)" th:field="*{size}">
+                <p th:if="${#fields.hasErrors()}"class="error-message">Field value must contains only digits and less than 4 signs</p>
             </td>
             <td>
                 <input class="form_item" type="submit" value="Save book">
@@ -28,15 +29,18 @@
 <hr>
 <p class="paragraph">Remove Books</p>
 <div class="remove-tables">
-    <form method="POST" th:action="@{/books/remove/by-id}">
+    <form method="POST" th:action="@{/books/remove/by-id}" th:object="${bookIdToRemove}">
         <table class="table">
             <caption>By Id</caption>
             <tr class="table_row">
                 <td>
-                    <input class="form_item" type="text" placeholder="Id of book" th:name="id">
+                    <input class="form_item" type="text" placeholder="Id of book" th:field="*{id}">
                 </td>
                 <td>
                     <input class="form_item" type="submit" value="Remove book">
+                </td>
+                <td th:if="${#fields.hasErrors()}">
+                    <p class="error-message">Fill the field</p>
                 </td>
             </tr>
         </table>

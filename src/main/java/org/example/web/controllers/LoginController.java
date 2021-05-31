@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.app.services.LoginService;
 import org.example.web.dto.User;
+import org.example.web.exceptions.BookShelfLoginException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,14 +28,20 @@ public class LoginController {
     }
 
     @PostMapping("/auth")
-    public String authenticate(User user) {
+    public String authenticate(User user) throws BookShelfLoginException {
         if (loginService.authenticate(user)) {
             log.info("login successful");
             return "redirect:/books/shelf";
         } else {
             log.info("login fail, try again");
-            return "redirect:/login";
+            throw new BookShelfLoginException("Invalid user or password");
         }
+    }
+
+    @ExceptionHandler(BookShelfLoginException.class)
+    public String handleError(Model model, BookShelfLoginException exception) {
+        model.addAttribute("errorMessage", exception.getMessage());
+        return "errors/404";
     }
 
 }

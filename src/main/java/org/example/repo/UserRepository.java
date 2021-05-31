@@ -25,7 +25,7 @@ public class UserRepository implements MyRepository<User> {
     }
 
     @Override
-    public boolean removeItemById(Long id) {
+    public boolean removeItemById(String id) {
         throw new UnsupportedOperationException("This method is not for this class");
     }
 

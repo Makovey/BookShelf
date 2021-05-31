@@ -26,7 +26,7 @@ public class BookService {
         unfilteredFullList.add(book);
     }
 
-    public boolean removeBookById(Long id) {
+    public boolean removeBookById(String id) {
         return bookRepository.removeItemById(id);
     }
 

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Not Found page</title>
+  <link rel="stylesheet" th:href="@{/styles/errors/404.css}">
+</head>
+<body>
+<h1>Oh, i can't load this page :(</h1>
+<div class="message">
+  <p class="error-message" th:text="${errorMessage}"></p>
+  <a href="http://localhost:8080/login">Return to login page</a>
+</div>
+</body>
+</html>

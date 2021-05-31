@@ -26,9 +26,9 @@ public class BookRepository implements MyRepository<Book> {
     }
 
     @Override
-    public boolean removeItemById(Long id) {
+    public boolean removeItemById(String id) {
         for (Book book : getAll()) {
-            if (book.getId().equals(id)) {
+            if (String.valueOf(book.getId()).equals(id)) {
                 log.info("Deleting book " + book);
                 return repo.remove(book);
             }

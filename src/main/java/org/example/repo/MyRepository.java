@@ -7,5 +7,5 @@ public interface MyRepository<T> {
 
     void saveItem(T t);
 
-    boolean removeItemById(Long id);
+    boolean removeItemById(String id);
 }
