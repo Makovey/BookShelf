@@ -18,7 +18,9 @@
             </td>
             <td>
                 <input class="form_item" type="text" placeholder="Size (pages)" th:field="*{size}">
-                <p th:if="${#fields.hasErrors()}"class="error-message">Field value must contains only digits and less than 4 signs</p>
+                <p th:if="${#fields.hasErrors()}" class="error-message">
+                    Field value must contains only digits and less than 4 signs
+                </p>
             </td>
             <td>
                 <input class="form_item" type="submit" value="Save book">
@@ -65,6 +67,20 @@
         </table>
     </form>
 </div>
+<hr>
+<form method="POST" th:action="@{/books/upload}" enctype="multipart/form-data">
+    <table class="table">
+        <caption>Upload file to server</caption>
+        <tr class="table_row">
+            <td>
+                <input class="form_item" type="file" name="file" style="padding: 7px 0 0 25px">
+            </td>
+            <td>
+                <input class="form_item" type="submit" value="Upload">
+            </td>
+        </tr>
+    </table>
+</form>
 <hr>
 <p class="paragraph">Books on the shelf</p>
 <table id="books">
