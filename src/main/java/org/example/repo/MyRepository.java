@@ -8,4 +8,6 @@ public interface MyRepository<T> {
     void saveItem(T t);
 
     boolean removeItemById(Long id);
+
+    void removeByParameter(T t);
 }

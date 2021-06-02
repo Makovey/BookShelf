@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final List<Book> unfilteredFullList;
 
     public List<Book> getAllBooks() {
         return bookRepository.getAll();
@@ -23,7 +22,6 @@ public class BookService {
 
     public void saveBook(Book book) {
         bookRepository.saveItem(book);
-        unfilteredFullList.add(book);
     }
 
     public boolean removeBookById(Long id) {
@@ -31,13 +29,10 @@ public class BookService {
     }
 
     public void removeAllByParameter(Book book) {
-        if (!book.getAuthor().isEmpty()) getAllBooks().removeIf(x -> x.getAuthor().equals(book.getAuthor()));
-        if (!book.getTitle().isEmpty()) getAllBooks().removeIf(x -> x.getTitle().equals(book.getTitle()));
-        if (book.getSize() != null)
-            getAllBooks().removeIf(x -> x.getSize() != null && x.getSize().equals(book.getSize()));
+        bookRepository.removeByParameter(book);
     }
 
-    public void sort(@NonNull String sortItem) {
+    public List<Book> sort(String sortItem) {
         List<Book> sortedBooks;
         if (sortItem.equals("author")) {
             sortedBooks = getAllBooks()
@@ -54,51 +49,31 @@ public class BookService {
                     .stream()
                     .sorted(Comparator.comparing(Book::getSize, Comparator.nullsFirst(Comparator.naturalOrder())))
                     .collect(Collectors.toList());
-
         }
-        replaceMainList(sortedBooks);
+        return sortedBooks;
     }
 
-    public void filterByAuthor(@NonNull String filterBy) {
-        returnOriginalList();
-        List<Book> filteredList = bookRepository
+    public List<Book> filterByAuthor(@NonNull String filterBy) {
+        return bookRepository
                 .getAll()
                 .stream()
                 .filter(x -> x.getAuthor().toLowerCase().startsWith(filterBy.toLowerCase()))
                 .collect(Collectors.toList());
-
-        replaceMainList(filteredList);
     }
 
-    public void filterByTitle(@NonNull String filterBy) {
-        returnOriginalList();
-        List<Book> filteredList = bookRepository
+    public List<Book> filterByTitle(@NonNull String filterBy) {
+        return bookRepository
                 .getAll()
                 .stream()
                 .filter(x -> x.getTitle().toLowerCase().startsWith(filterBy.toLowerCase()))
                 .collect(Collectors.toList());
-
-        replaceMainList(filteredList);
     }
 
-    public void filterBySize(@NonNull String filterBy) {
-        returnOriginalList();
-        List<Book> filteredList = bookRepository
+    public List<Book> filterBySize(@NonNull String filterBy) {
+        return bookRepository
                 .getAll()
                 .stream()
                 .filter(x -> String.valueOf(x.getSize()).startsWith(filterBy))
                 .collect(Collectors.toList());
-
-        replaceMainList(filteredList);
-    }
-
-    private void replaceMainList(List<Book> anotherList) {
-        getAllBooks().clear();
-        getAllBooks().addAll(anotherList);
-    }
-
-    public void returnOriginalList() {
-        getAllBooks().clear();
-        getAllBooks().addAll(unfilteredFullList);
     }
 }

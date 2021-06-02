@@ -29,4 +29,9 @@ public class UserRepository implements MyRepository<User> {
         throw new UnsupportedOperationException("This method is not for this class");
     }
 
+    @Override
+    public void removeByParameter(User user) {
+        throw new UnsupportedOperationException("This method is not for this class");
+    }
+
 }

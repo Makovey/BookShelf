@@ -47,4 +47,22 @@ public class BookRepository implements MyRepository<Book> {
         log.info("remove book by id " + id + " completed");
         return true;
     }
+
+    @Override
+    public void removeByParameter(Book book) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+
+        if (!book.getAuthor().isEmpty()) {
+            mapSqlParameterSource.addValue("author", book.getAuthor());
+            jdbcTemplate.update("DELETE FROM books WHERE author = :author", mapSqlParameterSource);
+        }
+        if (!book.getTitle().isEmpty()) {
+            mapSqlParameterSource.addValue("title", book.getTitle());
+            jdbcTemplate.update("DELETE FROM books WHERE title = :title", mapSqlParameterSource);
+        }
+        if (book.getSize() != null) {
+            mapSqlParameterSource.addValue("size", book.getSize());
+            jdbcTemplate.update("DELETE FROM books WHERE size = :size", mapSqlParameterSource);
+        }
+    }
 }

@@ -71,42 +71,37 @@ public class BookShelfController {
     }
 
     @PostMapping("/sort")
-    public String sortBooks(
-            @RequestParam(value = "author", required = false) String author,
-            @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "size", required = false) String size) {
-        if (author != null) {
-            log.info("Sort by author : " + author);
-            bookService.sort(author);
-        } else if (title != null) {
-            log.info("Sort by title : " + title);
-            bookService.sort(title);
-        } else {
-            log.info("Sort by page : " + size);
-            bookService.sort(size);
-        }
-        return "redirect:/books/shelf";
+    public String sortBooks(@RequestParam(value = "sortBy") String sortBy, Model model) {
+        model.addAttribute("book", new Book());
+        model.addAttribute("bookIdToRemove", new BookIdToRemove());
+        model.addAttribute("bookList", bookService.sort(sortBy));
+        return "book_shelf";
     }
 
     @PostMapping("/filter")
     public String filterBooks(
             @RequestParam(value = "author", required = false) String author,
             @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "size", required = false) String size) {
+            @RequestParam(value = "size", required = false) String size,
+            Model model) {
+
         if (!author.isEmpty()) {
             log.info("Filter by author : " + author);
-            bookService.filterByAuthor(author);
+            model.addAttribute("bookList", bookService.filterByAuthor(author));
         } else if (!title.isEmpty()) {
             log.info("Filter by title : " + title);
-            bookService.filterByTitle(title);
+            model.addAttribute("bookList", bookService.filterByTitle(title));
         } else if (size != null) {
             log.info("Filter by page : " + size);
-            bookService.filterBySize(size);
+            model.addAttribute("bookList", bookService.filterBySize(size));
         } else {
             log.info("Return original list");
-            bookService.returnOriginalList();
+            bookService.getAllBooks();
         }
-        return "redirect:/books/shelf";
+
+        model.addAttribute("book", new Book());
+        model.addAttribute("bookIdToRemove", new BookIdToRemove());
+        return "book_shelf";
     }
 
     @PostMapping("/upload")

@@ -100,9 +100,9 @@
 <hr>
 <p class="paragraph">Sort this books</p>
 <form class="buttons" method="POST" th:action="@{/books/sort}">
-    <button class="sort-btn" th:name="author" th:value="author">By Author</button>
-    <button class="sort-btn" th:name="title" th:value="title">By Title</button>
-    <button class="sort-btn" th:name="size" th:value="size">By Pages</button>
+    <button class="sort-btn" th:name="sortBy" th:value="author">By Author</button>
+    <button class="sort-btn" th:name="sortBy" th:value="title">By Title</button>
+    <button class="sort-btn" th:name="sortBy" th:value="size">By Pages</button>
 </form>
 <hr>
 <p class="paragraph">Filter this books</p>
