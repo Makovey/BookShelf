@@ -11,6 +11,10 @@
     <input type="text" class="login_item" placeholder="Enter your name" th:field="*{username}">
     <input type="password" class="login_item" placeholder="Enter your password" th:field="*{password}">
     <input type="submit" class="login_item" value="Login">
+    <p th:if="${#fields.hasErrors()}" class="error-message">
+        Please, fill in all the fields correctly <br>
+        Length of fields must be two or more characters
+    </p>
 </form>
 <p class="paragraph">OR</p>
 <a class="sign_up" th:href="@{/registration}">

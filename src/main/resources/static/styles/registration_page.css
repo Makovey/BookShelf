@@ -12,3 +12,9 @@
 input {
     height: 35px;
 }
+
+.error-message {
+    text-align: center;
+    font-weight: bold;
+    font-size: 10px;
+}

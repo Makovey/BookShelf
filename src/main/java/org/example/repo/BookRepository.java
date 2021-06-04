@@ -3,6 +3,7 @@ package org.example.repo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.web.dto.Book;
+import org.example.web.dto.BookToDelete;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -48,8 +49,7 @@ public class BookRepository implements MyRepository<Book> {
         return true;
     }
 
-    @Override
-    public void removeByParameter(Book book) {
+    public void removeByParameter(BookToDelete book) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 
         if (!book.getAuthor().isEmpty()) {

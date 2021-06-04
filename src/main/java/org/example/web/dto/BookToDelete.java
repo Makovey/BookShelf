@@ -4,24 +4,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Book {
-    private Long id;
+public class BookToDelete {
 
-    @NotBlank
-    @Size(min = 2, max = 20)
     @Pattern(regexp="^[A-Za-z]*$")
+    @Size(max = 20)
     private String author;
 
-    @NotBlank
-    @Size(min = 2, max = 20)
+    @Size(max = 20)
     private String title;
 
-    @NotNull
     @Digits(integer = 4, fraction = 0)
     private Long size;
 }

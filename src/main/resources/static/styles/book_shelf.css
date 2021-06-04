@@ -57,7 +57,10 @@ input {
 }
 
 .error-message {
-    text-align: center;
-    font-weight: bold;
+    text-align: left;
     font-size: 10px;
+}
+
+.form_download {
+    margin-top: 20px;
 }

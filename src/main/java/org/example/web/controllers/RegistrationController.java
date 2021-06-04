@@ -6,9 +6,12 @@ import org.example.app.services.UserService;
 import org.example.web.dto.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/registration")
@@ -26,13 +29,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/save")
-    public String saveUser(User user) {
-        log.info("POST registration page");
-        if (userService.isUserPresent(user)) {
-            log.info("User already registered :" + user);
-            return "registration_page";
-        } else if (!userService.isFieldsAreFill(user)) {
-            log.info("Fill the fields, user is empty  : " + user);
+    public String saveUser(@Valid User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors() || userService.isUserPresent(user)) {
             return "registration_page";
         }
         userService.saveUser(user);

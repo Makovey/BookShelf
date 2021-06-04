@@ -23,10 +23,6 @@ public class UserService {
         userRepo.saveItem(user);
     }
 
-    public boolean isFieldsAreFill(User user) {
-        return !user.getUsername().isEmpty() && !user.getPassword().isEmpty();
-    }
-
     public boolean isUserPresent(User user) {
         return getAllUsers().contains(user);
     }

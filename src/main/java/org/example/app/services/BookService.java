@@ -4,6 +4,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.example.repo.BookRepository;
 import org.example.web.dto.Book;
+import org.example.web.dto.BookToDelete;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -28,7 +29,7 @@ public class BookService {
         return bookRepository.removeItemById(id);
     }
 
-    public void removeAllByParameter(Book book) {
+    public void removeAllByParameter(BookToDelete book) {
         bookRepository.removeByParameter(book);
     }
 
@@ -69,11 +70,11 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
-    public List<Book> filterBySize(@NonNull String filterBy) {
+    public List<Book> filterBySize(@NonNull Long filterBy) {
         return bookRepository
                 .getAll()
                 .stream()
-                .filter(x -> String.valueOf(x.getSize()).startsWith(filterBy))
+                .filter(x -> String.valueOf(x.getSize()).startsWith(String.valueOf(filterBy)))
                 .collect(Collectors.toList());
     }
 }
