@@ -5,11 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.web.dto.User;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,7 +17,6 @@ import java.util.List;
 public class UserRepository implements MyRepository<User> {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAll() {
@@ -34,13 +33,26 @@ public class UserRepository implements MyRepository<User> {
     public void saveItem(User user) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("username", user.getUsername());
-        mapSqlParameterSource.addValue("password", passwordEncoder.encode(user.getPassword()));
+        mapSqlParameterSource.addValue("password", user.getPassword());
         jdbcTemplate.update("INSERT INTO users (username, password) VALUES (:username, :password)", mapSqlParameterSource);
     }
 
     @Override
     public boolean removeItemById(Long id) {
         throw new UnsupportedOperationException("This method is not for this class");
+    }
+
+    public Optional<User> findUserByUsername(String username) {
+        return jdbcTemplate.queryForObject(
+                "SELECT * FROM users where username = :username",
+                new MapSqlParameterSource("username", username),
+                (rs, rowNum) ->
+                        Optional.of(new User(
+                                rs.getLong("id"),
+                                rs.getString("username"),
+                                rs.getString("password")
+                        ))
+        );
     }
 
 }

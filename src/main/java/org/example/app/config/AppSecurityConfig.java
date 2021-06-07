@@ -1,6 +1,8 @@
 package org.example.app.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.app.services.LoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,17 +15,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @Slf4j
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final LoginService loginService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        log.info("Populate inmemory auth user");
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("USER");
+        auth.userDetailsService(loginService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -38,7 +38,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login*", "/registration/**").permitAll()
+                .antMatchers("/login/**", "/registration/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

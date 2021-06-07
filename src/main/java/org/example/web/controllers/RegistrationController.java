@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.app.services.UserService;
 import org.example.web.dto.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 public class RegistrationController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping
     public String registration(Model model) {
@@ -33,6 +35,7 @@ public class RegistrationController {
         if (bindingResult.hasErrors() || userService.isUserPresent(user)) {
             return "registration_page";
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
         return "redirect:/login";
     }

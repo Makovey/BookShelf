@@ -7,6 +7,7 @@ import org.example.web.dto.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +26,10 @@ public class UserService {
 
     public boolean isUserPresent(User user) {
         return getAllUsers().contains(user);
+    }
+
+    public Optional<User> findUserByUsername(String userName) {
+        return userRepo.findUserByUsername(userName);
     }
 
 }

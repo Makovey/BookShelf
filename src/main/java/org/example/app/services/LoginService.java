@@ -3,23 +3,27 @@ package org.example.app.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.web.dto.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class LoginService {
+public class LoginService implements UserDetailsService {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
-    public boolean authenticate(User user) {
-        log.info("Trying to authenticate with user" + user);
-        for(User savedUser :userService.getAllUsers()) {
-            if(user.getPassword().equals(passwordEncoder.encode(savedUser.getPassword()))) return true;
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        if(userService.findUserByUsername(s).isPresent()) {
+            User user = userService.findUserByUsername(s).get();
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("USER")));
         }
-
-        return false;
+        throw new UsernameNotFoundException("Invalid user");
     }
 }

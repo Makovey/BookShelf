@@ -1,6 +1,7 @@
 package org.example.web.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.example.app.exceptions.BookShelfLoginException;
 import org.example.app.services.LoginService;
@@ -31,18 +32,15 @@ public class LoginController {
     }
 
     @PostMapping("/auth")
-    public String authenticate(@Valid User user, BindingResult bindingResult) throws BookShelfLoginException {
-        if(bindingResult.hasErrors()) {
+    @SneakyThrows
+    public String authenticate(@Valid User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             log.info("Validation error");
             return "login_page";
         }
-        if (loginService.authenticate(user)) {
-            log.info("login successful");
-            return "redirect:/books/shelf";
-        } else {
-            log.info("login fail, try again");
-            throw new BookShelfLoginException("Invalid user or password");
-        }
+        loginService.loadUserByUsername(user.getUsername());
+        log.info("login successful");
+        return "redirect:/books/shelf";
     }
 
     @ExceptionHandler(BookShelfLoginException.class)
